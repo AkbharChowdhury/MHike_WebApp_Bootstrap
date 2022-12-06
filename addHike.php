@@ -185,7 +185,6 @@ if (isset($_POST['btnAddHike'])){
 
 </form>
 </div>
-<p id="i" class="text-<?=$colour[$a]?>" ><?=$a?? 'qwqw'?></p>
 <?php require_once 'templates/footer.php'; ?>
 <script>
 
