@@ -7,16 +7,21 @@ require_once 'classes/helper.class.php';
 
 $db = Database::getInstance();
 $hikeDetails = $db->getUserHikeDetails();
+if(!isset($_SESSION['user_id'])){
+    Helper::setErrorMessage('you must be logged in');
+    Helper::goTo('.');
+}
 ?>
 
 
 <div class="container">
-<h1>my hike</h1>
+<h1 class="text-capitalize">my hikes</h1>
 <a href="addHike.php" class="btn btn-warning mb-3">Add Hike</a>
+    <?php require_once  'includes/session_message.inc.php'; ?>
     <?php if($hikeDetails ): ?>
     <?php foreach ($hikeDetails as $row):?>
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-6 mb-2">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title"><?=$row['hike_name'];?></h5>
@@ -49,6 +54,12 @@ $hikeDetails = $db->getUserHikeDetails();
             </div>
 
     <?php endforeach;?>
+            <?php else: ?>
+            <?php
+                Helper::setErrorMessage('no hikes found');
+
+            ?>
+
             <?php endif?>
 </div>
 <?php require_once 'templates/footer.php'; ?>

@@ -236,6 +236,12 @@ final class Helper {
         $_SESSION['msg_type'] = 'danger';
         $_SESSION['msg_icon'] = 'exclamation-triangle-fill';
     }
+
+    public static function clearMessage() {
+        unset($_SESSION['message'] );
+        unset( $_SESSION['msg_type']);
+        unset( $_SESSION['msg_icon']);
+    }
     public static function setSuccessMessage($message) {
         $_SESSION['message'] = $message;
         $_SESSION['msg_type'] = 'success';

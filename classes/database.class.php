@@ -173,5 +173,14 @@ final class Database
         return $this->getConnection()->query('SELECT * FROM `Parking` ORDER BY parking_id ASC')->fetchAll();
     }
 
+    public function getDifficultyIDByName($type)
+    {
+        $sql = "SELECT `difficulty_id` FROM `Difficulty` WHERE `type` = :difficulty_id LIMIT 1";
+        $stmt = $this->getConnection()->prepare($sql);
+        $stmt->bindParam(':difficulty_id', $type);
+        $stmt->execute();
+        return $stmt->fetchColumn();
+    }
+
 
 }

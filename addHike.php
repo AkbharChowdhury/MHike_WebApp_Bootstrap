@@ -6,7 +6,10 @@ require_once 'classes/database.class.php';
 require_once 'classes/Helper.class.php';
 // require_once 'includes/register.inc.php';
 $db = Database::getInstance();
-
+if(!isset($_SESSION['user_id'])){
+    Helper::setErrorMessage('you must be logged in');
+    Helper::goTo('.');
+}
 if (isset($_POST['btnAddHike'])){
 
 
@@ -20,65 +23,48 @@ if (isset($_POST['btnAddHike'])){
     $parking = $_POST['parking'];
     $elevation = $_POST['elevation'];
     $high = $_POST['high'];
+
+
     $difficultyID = Helper::getDifficultyLevel(doubleval($distance), doubleval($elevation));
 
+    $difficulty = [
+        0 => 'Easy',
+        1 => 'Moderate',
+        2 => 'Hard',
+        3 => 'Expert'
 
 
-//$sql = "INSERT INTO `Hike`
-//                 SET `user_id` = :user_id,
-//                    `hike_date` = :hike_date,
-//                    `hike_name` = :hike_name,
-//                    `description` = :description,
-//                    `distance` = :distance,
-//                    `duration` = :duration,
-//                       `parking_id` = :parking_id,
-//                       elevation_gain = :elevation_gain,
-//                       high=:high,
-//                            difficulty_id=:difficulty_id
+    ];
 
 
-//    $db->addData('user_id', $user_id);
-//    $db->addData('hike_date', $date);
-//    $db->addData('hike_name', $name);
-//    $db->addData('description', $description);
-//    $db->addData('location', $location);
-//
-//    $db->addData('distance', $distance);
-//    $db->addData('duration', $duration);
-//    $db->addData('parking_id', $parking);
-//    $db->addData('elevation_gain', $elevation);
-//    $db->addData('high', $high);
-//    $db->addData('difficulty_id', $difficultyID);
 
 
-//    $db->addData('user_id', 1);
-//    $db->addData('hike_date', );
-//    $db->addData('hike_name', $name);
-//    $db->addData('description', $description);
-//    $db->addData('distance', $distance);
-//    $db->addData('duration', $duration);
-//    $db->addData('parking_id', $parking);
-//    $db->addData('elevation_gain', $elevation);
-//    $db->addData('high', $high);
-//    $db->addData('difficulty_id', $difficultyID);
 
 
-    if ($db->addHike($date, $name, $location, $description, $distance, $duration, $parking, $elevation, $high, $difficultyID)){
+
+
+
+
+    if ($db->addHike($date, $name, $location, $description, $distance, $duration, $parking, $elevation, $high, $db->getDifficultyIDByName($difficulty[$difficultyID]))){
         Helper::goTo('hike.php');
     }
 
 
+}
 
-
-
-
+if (isset($_SESSION['message'])){
+    Helper::clearMessage();
 
 }
+
+
 
 ?>
 
 
 <div class="container pt-2">
+
+
 
 <?php require_once 'includes/session_message.inc.php'?>
 
