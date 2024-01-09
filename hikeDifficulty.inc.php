@@ -25,18 +25,14 @@ $colour = [
 if (isset($_POST['distance'])  && isset($_POST['elevation'])){
     $distance = doubleval($_POST['distance']);
     $elevation = doubleval($_POST['elevation']);
-
-
-
     $difficultyName = $difficulty[Helper::getDifficultyLevel($distance,$elevation)];
     $difficultColour = $colour[$difficultyName];
     $data = [
-        'difficultyName' =>$difficultyName,
-        'difficultColour' =>$difficultColour
-
+        'difficultyName' => $difficultyName,
+        'difficultColour' => $difficultColour
 
     ];
-    echo  json_encode($data);
+    echo json_encode($data);
 
 
 }
